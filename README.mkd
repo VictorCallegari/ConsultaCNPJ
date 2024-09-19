@@ -1,0 +1,80 @@
+
+# CNPJ Batch Query Automation
+
+## Overview
+This script automates the process of querying multiple CNPJs (Brazilian company registration numbers) from the Receita Federal's API. It is designed to process the CNPJs in batches of 3, pausing for 1 minute between each batch, ensuring the system respects API rate limits and avoids overloading. The script reads CNPJs from an Excel file, fetches the status for each CNPJ, and saves the results in a new Excel file with an additional "Status" column.
+
+## Features
+- **Batch Processing:** Queries CNPJs in groups of 3 to prevent exceeding API limits.
+- **Time Management:** Introduces a 1-minute wait between each batch, making the process API-friendly.
+- **Progress Updates:** Displays real-time progress in the terminal, keeping users informed.
+- **Excel Integration:** Reads CNPJs from an Excel file and writes the updated data back to a new Excel file.
+
+## Requirements
+Before running the script, ensure you have the following installed:
+- Python 3.x
+- `pandas` library for working with Excel files
+- `requests` library for making API calls
+- `openpyxl` (optional but recommended for Excel file handling)
+
+To install the required dependencies, run:
+```bash
+pip install pandas requests openpyxl
+```
+
+## How It Works
+1. The script reads CNPJs from an input Excel file.
+2. It queries the Receita Federal API for each CNPJ in batches of 3, pausing for 1 minute between each batch.
+3. The status of each CNPJ is retrieved and saved to a new column ("Status") in the Excel file.
+4. The updated data is saved to a new Excel file, allowing you to track which CNPJs were processed successfully.
+
+## Usage
+1. Set the paths for your input and output Excel files in the script:
+   ```python
+   input_path = r'C:\path\to\your\input\file.xlsx'
+   output_path = r'C:\path\to\your\output\file.xlsx'
+   ```
+2. Run the script:
+   ```bash
+   python your_script.py
+   ```
+3. The terminal will show a progress bar indicating how many CNPJs have been processed and how many remain.
+
+## Code Structure
+```python
+import pandas as pd
+import requests
+import time
+import sys
+
+def consultar_cnpj(cnpj):
+    # Function to query the CNPJ from Receita Federal API
+    ...
+
+def atualizar_planilha(input_path, output_path):
+    # Main function to process the Excel file and update the CNPJ statuses
+    ...
+```
+
+## Example Output
+- **Input File:**
+  | CNPJ         |
+  |--------------|
+  | 12.345.678/0001-99 |
+  | 98.765.432/0001-88 |
+
+- **Output File:**
+  | CNPJ         | Status         |
+  |--------------|----------------|
+  | 12.345.678/0001-99 | Active          |
+  | 98.765.432/0001-88 | Suspended       |
+
+## Notes
+- Ensure that your input Excel file contains a column labeled **CNPJ**.
+- The script waits for 1 minute after processing every 3 CNPJs, which can be adjusted based on your needs.
+  
+## Contributing
+Feel free to submit issues or contribute to the project through pull requests.
+
+## License
+This project is licensed under the MIT License.
